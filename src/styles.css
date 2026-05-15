@@ -523,6 +523,27 @@ button:disabled {
   transition: background 200ms;
 }
 
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  transition: background-color 0.3s ease;
+  overflow-x: hidden;
+  /* Disable Copy-Paste and Text Selection */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+}
+
 .section-toggle:hover {
   background: var(--surface);
 }
@@ -1264,6 +1285,40 @@ body {
 
 .warning-icon {
   font-size: 1.2rem;
+}
+
+/* Auth Page Styles */
+.auth-panel {
+  margin-top: 40px;
+}
+
+.full-width {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.auth-toggle {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.auth-toggle p {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.auth-toggle button {
+  background: none;
+  border: none;
+  color: var(--primary-strong);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 4px;
+  text-decoration: underline;
+}
+
+.auth-toggle button:hover {
+  color: var(--primary);
 }
 
 .field span {

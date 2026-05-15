@@ -6,11 +6,14 @@ import Quiz from "./components/Quiz.jsx";
 import Results from "./components/Results.jsx";
 import RoleSelection from "./components/RoleSelection.jsx";
 import Verification from "./components/Verification.jsx";
+import Auth from "./components/Auth.jsx";
 import { generateCertificateId } from "./utils/certificate.js";
 import { calculateResults, createEmptyAnswers } from "./utils/scoring.js";
 
 export default function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem("dpdpa-theme") || "dark");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [screen, setScreen] = useState("home");
   const [role, setRole] = useState(null);
   const [details, setDetails] = useState(null);
@@ -23,6 +26,23 @@ export default function App() {
     localStorage.setItem("dpdpa-theme", theme);
     document.documentElement.dataset.theme = theme;
   }, [theme]);
+
+  // Security: Disable Right-click and Copy/Paste
+  useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault();
+    const handleCopy = (e) => e.preventDefault();
+    const handlePaste = (e) => e.preventDefault();
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    document.addEventListener("copy", handleCopy);
+    document.addEventListener("paste", handlePaste);
+
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+      document.removeEventListener("copy", handleCopy);
+      document.removeEventListener("paste", handlePaste);
+    };
+  }, []);
 
   const results = useMemo(() => {
     if (!role || !Object.keys(answers).length) {
@@ -80,49 +100,60 @@ export default function App() {
         />
 
         <div className="content-panel">
-          {screen === "home" && <Hero onStart={() => setScreen("roles")} onVerify={() => setScreen("verify")} />}
-          {screen === "verify" && (
-            <Verification
-              onBack={() => setScreen("home")}
-              onVerify={(data) => {
-                alert(`Verification request for ${data.certId} received. Verification system integrated.`);
-                setScreen("home");
-              }}
+          {!isAuthenticated ? (
+            <Auth 
+              onAuth={(email) => {
+                setUser(email);
+                setIsAuthenticated(true);
+              }} 
             />
-          )}
-          {screen === "roles" && <RoleSelection onSelect={selectRole} onBack={resetToHome} />}
-          {screen === "details" && (
-            <DetailsForm
-              onBack={() => setScreen("roles")}
-              onSubmit={(form) => {
-                setDetails(form);
-                setCertificateId(generateCertificateId());
-                setScreen("quiz");
-              }}
-            />
-          )}
-          {screen === "quiz" && role && (
-            <Quiz
-              role={role}
-              answers={answers}
-              onAnswer={updateAnswer}
-              onBack={() => setScreen("roles")}
-              onFinish={() => setScreen("results")}
-              isMenuOpen={isMenuOpen}
-              setIsMenuOpen={setIsMenuOpen}
-              seenQuestions={seenQuestions}
-              markAsSeen={markAsSeen}
-            />
-          )}
-          {screen === "results" && details && role && results && (
-            <Results
-              details={details}
-              role={role}
-              results={results}
-              certificateId={certificateId}
-              onBack={() => setScreen("quiz")}
-              onRetake={retake}
-            />
+          ) : (
+            <>
+              {screen === "home" && <Hero onStart={() => setScreen("roles")} onVerify={() => setScreen("verify")} />}
+              {screen === "verify" && (
+                <Verification
+                  onBack={() => setScreen("home")}
+                  onVerify={(data) => {
+                    alert(`Verification request for ${data.certId} received. Verification system integrated.`);
+                    setScreen("home");
+                  }}
+                />
+              )}
+              {screen === "roles" && <RoleSelection onSelect={selectRole} onBack={resetToHome} />}
+              {screen === "details" && (
+                <DetailsForm
+                  onBack={() => setScreen("roles")}
+                  onSubmit={(form) => {
+                    setDetails(form);
+                    setCertificateId(generateCertificateId());
+                    setScreen("quiz");
+                  }}
+                />
+              )}
+              {screen === "quiz" && role && (
+                <Quiz
+                  role={role}
+                  answers={answers}
+                  onAnswer={updateAnswer}
+                  onBack={() => setScreen("roles")}
+                  onFinish={() => setScreen("results")}
+                  isMenuOpen={isMenuOpen}
+                  setIsMenuOpen={setIsMenuOpen}
+                  seenQuestions={seenQuestions}
+                  markAsSeen={markAsSeen}
+                />
+              )}
+              {screen === "results" && details && role && results && (
+                <Results
+                  details={details}
+                  role={role}
+                  results={results}
+                  certificateId={certificateId}
+                  onBack={() => setScreen("quiz")}
+                  onRetake={retake}
+                />
+              )}
+            </>
           )}
         </div>
       </div>
