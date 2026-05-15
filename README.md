@@ -76,6 +76,4 @@ The assessments cover critical security domains including:
 - **Incident Response**
 - **AI Risk Mitigation**
 
----
 
-Developed by **Hackers Infotech** | 360° Cyber defence for digital Landscape
