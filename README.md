@@ -2,7 +2,7 @@
 
 A professional, high-fidelity React application designed for Cyber Hygiene Assessments aligned with the **Digital Personal Data Protection Act (DPDPA)**. This platform empowers users and IT teams to evaluate their security posture through interactive assessments and receive professional certification upon completion.
 
-## 🚀 Key Features
+##  Key Features
 
 - **Dual Assessment Roles**: Tailored question sets for both **General Users** and **IT/Technical Teams**.
 - **Interactive Quiz Engine**:
@@ -19,7 +19,7 @@ A professional, high-fidelity React application designed for Cyber Hygiene Asses
   - **Premium Aesthetics**: Smooth animations, glassmorphism-inspired panels, and a refined "Midnight Slate & Indigo" palette.
 - **Certificate Verification**: A dedicated portal to validate existing certificates via ID and Name.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: React.js (Vite)
 - **Styling**: Vanilla CSS3 (Custom Design System)
@@ -27,7 +27,7 @@ A professional, high-fidelity React application designed for Cyber Hygiene Asses
 - **QR Codes**: `qrcode`
 - **Animations**: CSS Keyframes
 
-## 📦 Installation & Setup
+##  Installation & Setup
 
 1. **Clone the repository**:
    ```bash
@@ -49,7 +49,7 @@ A professional, high-fidelity React application designed for Cyber Hygiene Asses
    npm run build
    ```
 
-## 📐 Project Structure
+##  Project Structure
 
 ```text
 src/
@@ -67,7 +67,7 @@ src/
 └── styles.css      # Centralized premium design system
 ```
 
-## 🛡️ Cyber Hygiene Best Practices
+##  Cyber Hygiene Best Practices
 
 The assessments cover critical security domains including:
 - **Consent & Privacy Management**
