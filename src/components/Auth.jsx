@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function Auth({ onAuth }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
     confirmPassword: ""
@@ -10,9 +11,11 @@ export default function Auth({ onAuth }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // In a real app, you'd call an API here. 
-    // For this client-side assessment, we'll simulate a successful auth.
-    onAuth(formData.email);
+    // Simulate successful auth with name and email
+    onAuth({
+      name: isLogin ? (formData.email.split("@")[0]) : formData.name,
+      email: formData.email
+    });
   }
 
   return (
@@ -29,6 +32,19 @@ export default function Auth({ onAuth }) {
         </div>
 
         <form onSubmit={handleSubmit} className="details-form">
+          {!isLogin && (
+            <div className="field">
+              <span>Full Name</span>
+              <input
+                type="text"
+                placeholder="Enter your full name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
+            </div>
+          )}
+
           <div className="field">
             <span>Email Address</span>
             <input

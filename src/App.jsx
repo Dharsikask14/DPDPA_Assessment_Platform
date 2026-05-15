@@ -88,6 +88,14 @@ export default function App() {
     setSeenQuestions(new Set());
   }
 
+  function handleLogout() {
+    setIsAuthenticated(false);
+    setUser(null);
+    setScreen("home");
+    setRole(null);
+    setAnswers({});
+  }
+
   return (
     <main className="app-shell">
       <div className="app-frame">
@@ -97,13 +105,15 @@ export default function App() {
           isMenuOpen={isMenuOpen}
           toggleMenu={() => setIsMenuOpen(!isMenuOpen)}
           showMenuToggle={screen === "quiz"}
+          user={user}
+          onLogout={handleLogout}
         />
 
         <div className="content-panel">
           {!isAuthenticated ? (
             <Auth 
-              onAuth={(email) => {
-                setUser(email);
+              onAuth={(userData) => {
+                setUser(userData);
                 setIsAuthenticated(true);
               }} 
             />
