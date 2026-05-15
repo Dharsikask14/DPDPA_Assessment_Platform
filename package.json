@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "homepage": "https://Dharsikask14.github.io/DPDPA_Assessment_Platform/",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1"
   },
@@ -15,5 +18,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "vite": "^7.0.0"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
   }
 }
